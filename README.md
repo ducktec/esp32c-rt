@@ -16,7 +16,8 @@ SoC will also be compatible with this crate.
 ## Modifications
 
 In relation to the `riscv-rt` crate, the following modifications have been implemented:
-- TBD
+- Only prepare the binary blobs containing the reset and startup routine for the 
+  `rv32imc` architecture. This is the ESP32-C SoC series architecture.
 
 ## Documentation
 

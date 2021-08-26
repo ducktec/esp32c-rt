@@ -2,18 +2,14 @@
 
 set -euxo pipefail
 
-crate=riscv-rt
+crate=esp32c-rt
 
 # remove existing blobs because otherwise this will append object files to the old blobs
 rm -f bin/*.a
 
-for ext in i ic im imc
-do
-    riscv64-unknown-elf-gcc -ggdb3 -fdebug-prefix-map=$(pwd)=/riscv-rt -c -mabi=ilp32 -march=rv32${ext} asm.S -o bin/$crate.o
-    riscv64-unknown-elf-ar crs bin/riscv32${ext}-unknown-none-elf.a bin/$crate.o
-
-    riscv64-unknown-elf-gcc -ggdb3 -fdebug-prefix-map=$(pwd)=/riscv-rt -c -mabi=lp64 -march=rv64${ext} asm.S -o bin/$crate.o
-    riscv64-unknown-elf-ar crs bin/riscv64${ext}-unknown-none-elf.a bin/$crate.o
-done
+# rv32imc (RISC-V 32-bit bare metal instruction set with the MC extensions)
+# this is the instruction set for the ESP32-C SoC series, no need to build artifacts for other instruction sets
+riscv64-unknown-elf-gcc -ggdb3 -fdebug-prefix-map=$(pwd)=/esp32c-rt -c -mabi=ilp32 -march=rv32imc asm.S -o bin/$crate.o
+riscv64-unknown-elf-ar crs bin/riscv32imc-unknown-none-elf.a bin/$crate.o
 
 rm bin/$crate.o
