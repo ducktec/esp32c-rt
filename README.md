@@ -21,6 +21,12 @@ In relation to the `riscv-rt` crate, the following modifications have been imple
 - Exclude `mie` and `mip` machine interrupt registers from the the startup reset
   routine. These registers are not implemented by the SoCs and would result in
   a `invalid instruction` exception if not removed.
+- Add a feature `directboot` (by default enabled) that alters the link script so that
+  magic numbers are included that boot the EPS32-C SoC in direct-boot mode. This
+  simplifies the boot and setup effort significantly, but breaks compatibility with
+  numerous [ESP-IDF] features (secure boot etc.). More details on the direct-boot mode
+  are available in the [esp32c3-direct-boot-example] repository.
+  **This mode is only supported for SoC >= rev. 3**
 
 ## Documentation
 
@@ -78,3 +84,5 @@ that code of conduct.
 [team]: https://github.com/rust-embedded/wg#the-risc-v-team
 [`riscv-rt`]: https://github.com/rust-embedded/riscv
 [ESP32-C3]: https://www.espressif.com/en/products/socs/esp32-c3
+[ESP-IDF]: https://github.com/espressif/esp-idf
+[esp32c3-direct-boot-example]: https://github.com/espressif/esp32c3-direct-boot-example
