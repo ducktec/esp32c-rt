@@ -18,6 +18,9 @@ SoC will also be compatible with this crate.
 In relation to the `riscv-rt` crate, the following modifications have been implemented:
 - Only prepare the binary blobs containing the reset and startup routine for the 
   `rv32imc` architecture. This is the ESP32-C SoC series architecture.
+- Exclude `mie` and `mip` machine interrupt registers from the the startup reset
+  routine. These registers are not implemented by the SoCs and would result in
+  a `invalid instruction` exception if not removed.
 
 ## Documentation
 

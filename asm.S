@@ -46,8 +46,12 @@ _abs_start:
     .cfi_startproc
     .cfi_undefined ra
 
-    csrw mie, 0
-    csrw mip, 0
+    // the ESP32-C3 RISCV Core does not support the mie and mip registers
+    // leaving these registers in place for the reset routine will cause
+    // an "invalid instruction" exception
+
+    // csrw mie, 0
+    // csrw mip, 0
 
     li  x1, 0
     li  x2, 0
