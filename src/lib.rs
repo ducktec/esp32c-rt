@@ -1,4 +1,4 @@
-//! Minimal runtime / startup for ESP32-C series CPU's
+//! Minimal runtime / startup for ESP32-C series SoCs
 //!
 //! This crate is a fork of the `riscv-rt` crate.
 //!
@@ -16,11 +16,11 @@
 //! - `#[entry]` to declare the entry point of the program
 //! - `#[pre_init]` to run code *before* `static` variables are initialized
 //!
-//! - A linker script that encodes the memory layout of a generic RISC-V
-//!   microcontroller. This linker script is missing some information that must
-//!   be supplied through a `memory.x` file (see example below). This file
-//!   must be supplied using rustflags and listed *before* `link.x`. Arbitrary
-//!   filename can be use instead of `memory.x`.
+//! - A linker script that encodes the memory layout of a the ESP32-C3 RISC-V
+//!   SoC. The memory layout is only included when the feature `esp32c3` is
+//!   enabled. Alternatively, a custom memory layout can be included. This file
+//!   must be supplied using rustflags and listed *before* `link.x`. An arbitrary
+//!   filename can be used.
 //!
 //! - A `_sheap` symbol at whose address you can locate a heap.
 //!
@@ -30,23 +30,8 @@
 //! $ # add this crate as a dependency
 //! $ edit Cargo.toml && cat $_
 //! [dependencies]
-//! riscv-rt = "0.6.1"
+//! esp32c-rt = "0.1.0"
 //! panic-halt = "0.2.0"
-//!
-//! $ # memory layout of the device
-//! $ edit memory.x && cat $_
-//! MEMORY
-//! {
-//!   RAM : ORIGIN = 0x80000000, LENGTH = 16K
-//!   FLASH : ORIGIN = 0x20000000, LENGTH = 16M
-//! }
-//!
-//! REGION_ALIAS("REGION_TEXT", FLASH);
-//! REGION_ALIAS("REGION_RODATA", FLASH);
-//! REGION_ALIAS("REGION_DATA", RAM);
-//! REGION_ALIAS("REGION_BSS", RAM);
-//! REGION_ALIAS("REGION_HEAP", RAM);
-//! REGION_ALIAS("REGION_STACK", RAM);
 //!
 //! $ edit src/main.rs && cat $_
 //! ```
@@ -55,9 +40,11 @@
 //! #![no_std]
 //! #![no_main]
 //!
-//! extern crate panic_halt;
+//! use esp32c_rt::entry;
 //!
-//! use riscv_rt::entry;
+//! // Provides a necessary panic handler
+//! #[allow(unused_imports)]
+//! use panic_halt;
 //!
 //! // use `main` as the entry point of this application
 //! // `main` is not allowed to return
@@ -70,39 +57,14 @@
 //!
 //! ``` text
 //! $ mkdir .cargo && edit .cargo/config && cat $_
-//! [target.riscv32imac-unknown-none-elf]
+//! [target.riscv32imc-unknown-none-elf]
 //! rustflags = [
 //!   "-C", "link-arg=-Tmemory.x",
 //!   "-C", "link-arg=-Tlink.x",
 //! ]
 //!
 //! [build]
-//! target = "riscv32imac-unknown-none-elf"
-//! $ edit build.rs && cat $_
-//! ```
-//!
-//! ``` ignore,no_run
-//! use std::env;
-//! use std::fs::File;
-//! use std::io::Write;
-//! use std::path::Path;
-//!
-//! /// Put the linker script somewhere the linker can find it.
-//! fn main() {
-//!     let out_dir = env::var("OUT_DIR").expect("No out dir");
-//!     let dest_path = Path::new(&out_dir);
-//!     let mut f = File::create(&dest_path.join("memory.x"))
-//!         .expect("Could not create file");
-//!
-//!     f.write_all(include_bytes!("memory.x"))
-//!         .expect("Could not write file");
-//!
-//!     println!("cargo:rustc-link-search={}", dest_path.display());
-//!
-//!     println!("cargo:rerun-if-changed=memory.x");
-//!     println!("cargo:rerun-if-changed=build.rs");
-//! }
-//! ```
+//! target = "riscv32imc-unknown-none-elf"
 //!
 //! ``` text
 //! $ cargo build
@@ -111,10 +73,10 @@
 //!
 //! Disassembly of section .text:
 //!
-//! 20000000 <_start>:
-//! 20000000:	800011b7          	lui	gp,0x80001
-//! 20000004:	80018193          	addi	gp,gp,-2048 # 80000800 <_stack_start+0xffffc800>
-//! 20000008:	80004137          	lui	sp,0x80004
+//! 42000000 <_start-0x8>:
+//! 42000000:       041d                    addi    s0,s0,7
+//! 42000002:       041daedb                0x41daedb
+//! 42000006:                       0xaedb
 //! ```
 //!
 //! # Symbol interfaces
@@ -126,6 +88,11 @@
 //! ## `memory.x`
 //!
 //! This file supplies the information about the device to the linker.
+//!
+//! _If the feature `esp32c3` is enabled (enabled by default), this file does not have
+//! to be provided. The memory layout for the ESP32-C3 in that case is already
+//! provided by this crate.
+//! By disabling the feature, a custom `memory.x` file can be provided and used._
 //!
 //! ### `MEMORY`
 //!
@@ -383,8 +350,6 @@ pub unsafe extern "C" fn start_rust() -> ! {
         r0::zero_bss(&mut _sbss, &mut _ebss);
         r0::init_data(&mut _sdata, &mut _edata, &_sidata);
     }
-
-    // TODO: Enable FPU when available
 
     _setup_interrupts();
 
