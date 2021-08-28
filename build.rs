@@ -43,9 +43,18 @@ fn main() {
             .unwrap();
     };
 
+    if cfg!(feature = "esp32c3") {
+        // Put the esp32-c3 memory layout linker script somewhere the linker can find it
+        fs::File::create(out_dir.join("memory.x"))
+            .unwrap()
+            .write_all(include_bytes!("esp32_c3_memory.x"))
+            .unwrap();
+    }
+
     println!("cargo:rustc-link-search={}", out_dir.display());
 
     println!("cargo:rerun-if-changed=build.rs");
     println!("cargo:rerun-if-changed=link.x");
     println!("cargo:rerun-if-changed=link_direct_boot.x");
+    println!("cargo:rerun-if-changed=esp32_c3_memory.x");
 }

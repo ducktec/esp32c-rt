@@ -27,6 +27,9 @@ Compared to the `riscv-rt` crate, the following modifications have been implemen
   numerous [ESP-IDF] features (secure boot etc.). More details on the direct-boot mode
   are available in the [esp32c3-direct-boot-example] repository.
   **This mode is only supported for SoC >= rev. 3**
+- Add a feature `esp32c3` (by default enabled at this point in time) that includes
+  the memory layout of the ESP32-C3 for the linker so that this file does not have
+  to be supplemented by downstream projects.
 
 ## Documentation
 

@@ -4,7 +4,7 @@ version = "0.1.0"
 repository = "https://github.com/ducktec/esp32c-rt"
 authors = ["Robert Wiewel <dev@ducktec.de>"]
 edition = "2018"
-description = "Minimal runtime / startup for ESP32-C series CPU's"
+description = "Minimal runtime / startup for ESP32-C series SoCs"
 keywords = ["riscv", "runtime", "startup", "esp32-c3"]
 license = "ISC"
 categories = [
@@ -19,9 +19,10 @@ riscv = "0.7"
 riscv-rt-macros = "0.1.6"
 
 [features]
-default=["direct-boot"]
+default=["direct-boot", "esp32c3"]
 inline-asm = ["riscv/inline-asm"]
 direct-boot = []
+esp32c3 = []
 
 [dev-dependencies]
 panic-halt = "0.2.0"
