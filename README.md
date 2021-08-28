@@ -6,7 +6,7 @@
 
 > Minimal runtime / startup for RISC-V-based CPU's of the ESP32-C SoC series.
 
-This project is based on the [`riscv-rt`] crate and provides modifications specific
+This project is a fork of the [`riscv-rt`] crate and provides modifications specific
 to the ESP32-C series on top of this crate.
 
 At this point in time, only the [ESP32-C3] has been released. However,
@@ -15,7 +15,7 @@ SoC will also be compatible with this crate.
 
 ## Modifications
 
-In relation to the `riscv-rt` crate, the following modifications have been implemented:
+Compared to the `riscv-rt` crate, the following modifications have been implemented:
 - Only prepare the binary blobs containing the reset and startup routine for the 
   `rv32imc` architecture. This is the ESP32-C SoC series architecture.
 - Exclude `mie` and `mip` machine interrupt registers from the the startup reset
@@ -39,39 +39,7 @@ compile with older versions but that may change in any new patch release.
 
 ## License
 
-The upstream `riscv-rt` crate is licensed under the following terms:
-```
-Copyright 2018 [RISC-V team][team]
-
-Permission to use, copy, modify, and/or distribute this software for any purpose
-with or without fee is hereby granted, provided that the above copyright notice
-and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
-FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
-OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
-TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
-THIS SOFTWARE.
-```
-
-The modifications in this crate are licensed under the same license:
-```
-Copyright 2021 Robert Wiewel
-
-Permission to use, copy, modify, and/or distribute this software for any purpose
-with or without fee is hereby granted, provided that the above copyright notice
-and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
-FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
-OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
-TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
-THIS SOFTWARE.
-```
+See [`LICENSE.md`](LICENSE.md)
 
 
 ## Code of Conduct
