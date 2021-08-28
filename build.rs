@@ -31,7 +31,7 @@ fn main() {
 
     if cfg!(feature = "direct-boot") {
         // Put the directboot linker script somewhere the linker can find it
-        fs::File::create(out_dir.join("link_direct_boot.x"))
+        fs::File::create(out_dir.join("link.x"))
             .unwrap()
             .write_all(include_bytes!("link_direct_boot.x"))
             .unwrap();
