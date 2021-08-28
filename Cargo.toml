@@ -23,5 +23,8 @@ default=["direct-boot"]
 inline-asm = ["riscv/inline-asm"]
 direct-boot = []
 
+[dev-dependencies]
+panic-halt = "0.2.0"
+
 [build-dependencies]
 riscv-target = "0.1.2"
