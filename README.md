@@ -3,9 +3,9 @@
 > Minimal runtime / startup for RISC-V-based CPU's of the ESP32-C SoC series.
 
 [![Build Status](https://github.com/ducktec/esp32c-rt/actions/workflows/ci.yaml/badge.svg)](https://github.com/ducktec/esp32c-rt/actions/workflows/ci.yaml)
-[![crates.io](https://img.shields.io/crates/v/esp32c-rt.svg)](https://crates.io/crates/esp32c-rt)
+[![crates.io](https://img.shields.io/crates/v/esp32c-rt)](https://crates.io/crates/esp32c-rt)
 [![API](https://docs.rs/esp32c-rt/badge.svg)](https://docs.rs/esp32c-rt)
-[![License](https://img.shields.io/crates/l/esp32c-rt.svg)](https://github.com/ducktec/esp32c-rt/blob/trunk/LICENSE.md)
+[![License](https://img.shields.io/crates/l/esp32c-rt)](https://github.com/ducktec/esp32c-rt/blob/trunk/LICENSE.md)
 
 This project is a fork of the [`riscv-rt`] crate and provides modifications specific
 to the ESP32-C series on top of this crate.
