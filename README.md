@@ -1,10 +1,11 @@
-<!-- [![crates.io](https://img.shields.io/crates/d/riscv-rt.svg)](https://crates.io/crates/riscv-rt)
-[![crates.io](https://img.shields.io/crates/v/riscv-rt.svg)](https://crates.io/crates/riscv-rt)
-[![Build Status](https://travis-ci.org/rust-embedded/riscv-rt.svg?branch=master)](https://travis-ci.org/rust-embedded/riscv-rt) -->
-
 # `esp32c-rt`
 
 > Minimal runtime / startup for RISC-V-based CPU's of the ESP32-C SoC series.
+
+[![Build Status](https://github.com/ducktec/esp32c-rt/actions/workflows/ci.yaml/badge.svg)](https://github.com/ducktec/esp32c-rt/actions/workflows/ci.yaml)
+[![crates.io](https://img.shields.io/crates/v/esp32c-rt.svg)](https://crates.io/crates/esp32c-rt)
+[![API](https://docs.rs/esp32c-rt/badge.svg)](https://docs.rs/esp32c-rt)
+[![License](https://img.shields.io/crates/l/esp32c-rt.svg)](https://github.com/ducktec/esp32c-rt/blob/trunk/LICENSE.md)
 
 This project is a fork of the [`riscv-rt`] crate and provides modifications specific
 to the ESP32-C series on top of this crate.
@@ -31,6 +32,20 @@ Compared to the `riscv-rt` crate, the following modifications have been implemen
   the memory layout of the ESP32-C3 for the linker so that this file does not have
   to be supplemented by downstream projects.
 
+
+## ESP32-C3 Memory Layout
+
+The following memory layout is assumed when the feature `esp32c3` is enabled:
+```
+MEMORY
+{
+    irom (x): ORIGIN = 0x42000000, LENGTH = 0x400000
+    drom (r): ORIGIN = 0x3C000000, LENGTH = 0x400000
+    ram (rw): ORIGIN = 0x3FC80000, LENGTH = 0x50000
+    rtc_ram (rx): ORIGIN = 0x50000000, LENGTH = 0x2000
+}
+```
+
 ## Documentation
 
 The rust documentation can be found [here](https://docs.rs/crate/esp32c-rt)
@@ -44,6 +59,11 @@ compile with older versions but that may change in any new patch release.
 
 See [`LICENSE.md`](LICENSE.md)
 
+## Contribution
+
+Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion
+in the repository by you, shall also be licensed under the ISC license as described in
+[`LICENSE.md`](LICENSE.md), without any additional terms or conditions.
 
 ## Code of Conduct
 
@@ -53,7 +73,7 @@ that code of conduct.
 
 [CoC]: CODE_OF_CONDUCT.md
 [team]: https://github.com/rust-embedded/wg#the-risc-v-team
-[`riscv-rt`]: https://github.com/rust-embedded/riscv
+[`riscv-rt`]: https://github.com/rust-embedded/riscv-rt
 [ESP32-C3]: https://www.espressif.com/en/products/socs/esp32-c3
 [ESP-IDF]: https://github.com/espressif/esp-idf
 [esp32c3-direct-boot-example]: https://github.com/espressif/esp32c3-direct-boot-example
