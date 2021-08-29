@@ -1,6 +1,6 @@
 [package]
 name = "esp32c-rt"
-version = "0.1.0"
+version = "0.1.1"
 repository = "https://github.com/ducktec/esp32c-rt"
 authors = ["Robert Wiewel <dev@ducktec.de>"]
 edition = "2018"
