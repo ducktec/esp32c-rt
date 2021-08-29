@@ -1,7 +1,7 @@
 
 on:
   push:
-    branches: [ staging, trying, master ]
+    branches: [ staging, trying, trunk ]
   pull_request:
 
 name: Code formatting check
