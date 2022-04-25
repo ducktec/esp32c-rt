@@ -1,3 +1,7 @@
+> # :warning: Abandoned!
+>
+>**This implementation (in combination with [`esp32c3-hal`](https://github.com/ducktec/esp32c3-hal)) was abandoned in favour of the implementation in [esp-rs/esp-hal](https://github.com/esp-rs/esp-hal) and it's use of the default `riscv-rt` crate. The (already more mature) implementation in `esp-hal` supports multiple ESP32 variants, the `ESP32-C3` variant being one of them. It is strongly recommended to use `esp-hal` instead!**
+
 # `esp32c-rt`
 
 > Minimal runtime / startup for RISC-V-based CPU's of the ESP32-C SoC series.
